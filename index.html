@@ -110,6 +110,12 @@ async function weather(){
   const raining=Number(c.rain||0)>0||Number(c.precipitation||0)>0;
   // Pause irrigation during current rain or when the next-hour rain chance is at least 60%.
   weatherRainLock=raining||chance>=60;
+  const lockStatus = document.getElementById('rain-lock-status');
+
+if (lockStatus) {
+  lockStatus.textContent = weatherRainLock ? 'RAIN LOCK: ON' : 'RAIN LOCK: OFF';
+  lockStatus.style.color = weatherRainLock ? '#ef4444' : '#16a34a';
+}
   $('weatherTemp').textContent=c.temperature_2m+'°C';
   $('rainChance').textContent=chance+'%';
   $('rainNow').textContent=raining?'Yes':'No';
