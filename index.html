@@ -22,7 +22,7 @@ body:before,body:after{content:"";position:fixed;width:340px;height:340px;border
 <article class="card" id="pot2"><div class="pothead"><div class="potname"><div class="plant">🌿</div><div><h3>Pot 02</h3><p>Soil moisture sensor · A1</p></div></div><span class="pill dry" id="status2">Needs water</span></div><div class="reading"><strong id="value2">31%</strong><span>SOIL MOISTURE</span></div><div class="track"><div class="bar" id="bar2"></div></div><div class="scale"><span>Dry</span><span>Moist</span><span>Wet</span></div></article>
 </section>
 <section class="lower"><article class="card"><h3 class="section">System status</h3><div class="rowline"><span>Controller</span><strong class="good">Arduino Uno · Demo</strong></div><div class="rowline"><span>Servo motor</span><strong class="good">Sweep test passed</strong></div><div class="rowline"><span>Water pump</span><strong>Not activated</strong></div><div class="rowline"><span>Sensor feed</span><strong>Sample values</strong></div><div class="actions"><button class="btn" id="refreshBtn" type="button">Refresh demo readings ↻</button><button class="btn secondary" id="dryBtn" type="button">Simulate dry soil</button></div><div class="toast" id="message" aria-live="polite">Demo ready. Try a control above.</div></article>
-<article class="card"><h3 class="section">Garden conditions</h3><div class="weatherbox"><div class="weathericon">🌤️</div><div><strong>Weather panel</strong><p>Live weather is not connected</p></div></div><p class="hint">This preview uses sample readings only. Live Arduino readings and automatic pump control are not enabled yet.</p></article></section>
+<article class="card"><h3 class="section">Garden conditions</h3><div class="weatherbox"><div class="weathericon">🌤️</div><div><strong>Weather panel</strong><p><span id="weather-status">Connecting to live weather...</span></p></div></div><p class="hint">This preview uses sample readings only. Live Arduino readings and automatic pump control are not enabled yet.</p></article></section>
 <footer class="footer"><span>ROOTLINK · <b>Sense. Decide. Water.</b></span><span>Two-pot prototype preview</span></footer>
 </main>
 <script>
@@ -74,6 +74,13 @@ async function loadRootlinkWeather() {
     const current = data.current;
     const rainChance = data.hourly.precipitation_probability[0];
     const raining = current.rain > 0 || current.precipitation > 0;
+   const panel = document.getElementById("weather-status");
+
+if (panel) {
+  panel.textContent = raining
+    ? "🌧️ Rain detected — watering should stop"
+    : "☀️ No rain detected — checking soil moisture";
+}
 
     document.getElementById("rl-temp").textContent =
       current.temperature_2m + "°C";
