@@ -64,6 +64,17 @@ body:before{top:-150px;left:-110px}body:after{right:-130px;bottom:-170px;backgro
 <div class="actions"><button class="btn" id="connectBtn" type="button">Connect Arduino ↗</button><button class="btn secondary" id="refreshBtn" type="button">Refresh demo readings ↻</button></div>
 <div class="toast" id="message" aria-live="polite">Demo ready. Connect the Arduino to receive live sensor readings.</div>
 <div class="connect-area"><strong>Arduino connection</strong><p>Use desktop Chrome or Edge over this secure website. Close Arduino IDE Serial Monitor before connecting. Keep the Arduino plugged in by USB.</p><div class="statusline" id="serialStatus">Not connected</div></div>
+<div class="watering-controls">
+  <h3>💧 Manual Watering Control</h3>
+  <p id="wateringMessage">Connect Arduino to begin.</p>
+  <button class="btn" id="startWaterBtn" type="button">
+    START WATERING
+  </button>
+  <button class="btn secondary" id="stopWaterBtn" type="button">
+    STOP WATERING
+  </button>
+</div>
+
 </article>
 <article class="card"><h3 class="section">Garden conditions</h3>
 <div class="weatherbox"><div class="weathericon" id="weatherIcon">🌤️</div><div><strong>Live weather</strong><p id="weatherStatus">Connecting to Open-Meteo...</p></div></div>
@@ -191,9 +202,36 @@ async function connectArduino(){
   if(writer){try{writer.releaseLock();}catch(err){}writer=null;}
  }
 }
-document.addEventListener('DOMContentLoaded',()=>{
+ 
+async function startWatering() {
+  if (!writer || !arduinoConnected) {
+    setMessage('Connect Arduino first!');
+    return;
+  }
+
+  if (weatherRainLock) {
+    setMessage('Rain protection is ON. Watering blocked!');
+    return;
+  }
+
+  await writer.write(new TextEncoder().encode('PUMP:1\n'));
+  $('wateringMessage').textContent = 'Watering requested. Check pipe position!';
+  setMessage('Watering started.');
+}
+
+async function stopWatering() {
+  if (writer) {
+    await writer.write(new TextEncoder().encode('PUMP:0\n'));
+  }
+  $('wateringMessage').textContent = 'Pump stopped.';
+  setMessage('Watering stopped.');
+}
+
+ document.addEventListener('DOMContentLoaded',()=>{
  $('connectBtn').addEventListener('click',connectArduino);
  $('refreshBtn').addEventListener('click',refreshDemo);
+  $('startWaterBtn').addEventListener('click',startWatering);
+$('stopWaterBtn').addEventListener('click',stopWatering);
  refreshDemo();weather();setInterval(weather,600000);
 });
 })();
