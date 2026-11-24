@@ -55,5 +55,46 @@ body:before,body:after{content:"";position:fixed;width:340px;height:340px;border
  });
 })();
 </script>
+ <div id="rootlink-weather" style="background:#172b25;color:white;padding:20px;border-radius:18px;margin:20px;font-family:Arial">
+  <h2>🌦️ Live Weather</h2>
+  <h1 id="rl-temp">Loading...</h1>
+  <p id="rl-condition">Checking weather...</p>
+  <p id="rl-rain">Rain probability: --</p>
+  <h3 id="rl-alert">Checking watering conditions...</h3>
+</div>
+
+<script>
+async function loadRootlinkWeather() {
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=17.45&longitude=78.50&current=temperature_2m,precipitation,rain,weather_code&hourly=precipitation_probability&forecast_days=1&timezone=Asia%2FKolkata";
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const current = data.current;
+    const rainChance = data.hourly.precipitation_probability[0];
+    const raining = current.rain > 0 || current.precipitation > 0;
+
+    document.getElementById("rl-temp").textContent =
+      current.temperature_2m + "°C";
+
+    document.getElementById("rl-condition").textContent =
+      raining ? "🌧️ It is raining!" : "☀️ No rain detected right now";
+
+    document.getElementById("rl-rain").textContent =
+      "Rain probability: " + rainChance + "%";
+
+    document.getElementById("rl-alert").textContent =
+      raining ? "⛔ Rain detected — watering should stop" :
+      "✅ No current rain — check soil moisture";
+  } catch (error) {
+    document.getElementById("rl-condition").textContent =
+      "Weather unavailable. Check internet.";
+  }
+}
+
+loadRootlinkWeather();
+setInterval(loadRootlinkWeather, 600000);
+</script>
 </body>
 </html>
