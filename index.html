@@ -1,107 +1,196 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ROOTLINK | Smart Irrigation</title>
 <style>
 :root{--green:#1e6548;--deep:#123d2d;--mint:#dff2e5;--ink:#18372b;--muted:#718579;--line:#e4eee6;--white:#fff;--shadow:0 18px 50px #17452a12}
-*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Arial;background:linear-gradient(135deg,#eff7ee,#e1f0e5 55%,#f8f8ed);min-height:100vh;overflow-x:hidden}
-body:before,body:after{content:"";position:fixed;width:340px;height:340px;border-radius:50%;background:#b8dfc1;filter:blur(65px);opacity:.45;z-index:-1;animation:drift 12s ease-in-out infinite alternate}body:before{top:-150px;left:-110px}body:after{right:-130px;bottom:-170px;background:#d1e5a9;animation-delay:-5s}@keyframes drift{to{transform:translate(45px,35px) scale(1.12)}}
-.shell{max-width:1100px;margin:auto;padding:28px 22px 42px}.nav{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}.brand{display:flex;align-items:center;gap:12px}.logo{height:46px;width:46px;border-radius:15px;background:var(--green);display:grid;place-items:center;color:white;font-size:24px;box-shadow:0 8px 20px #1e654833}.brand h1{font-size:20px;letter-spacing:2px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:3px 0 0}.demo{font-size:11px;font-weight:700;letter-spacing:.5px;color:#79591b;background:#fff4d8;padding:10px 13px;border-radius:30px;border:1px solid #f1dfb5}
-.hero{background:linear-gradient(115deg,#174b35,#327b51);color:white;border-radius:25px;padding:28px 30px;display:flex;justify-content:space-between;align-items:center;gap:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:18px}.hero:after{content:'🌱';font-size:130px;position:absolute;right:24%;top:-34px;opacity:.1;transform:rotate(-18deg)}.hero h2{font-size:clamp(23px,4vw,32px);margin:0 0 9px;letter-spacing:-.8px}.hero p{color:#d6eadc;line-height:1.55;font-size:13px;max-width:570px;margin:0}.stat{z-index:1;background:#ffffff1b;border:1px solid #ffffff35;border-radius:18px;padding:16px 20px;min-width:145px}.stat small{display:block;color:#d4e8d9;font-size:10px;letter-spacing:1px}.stat strong{font-size:27px;display:block;margin-top:5px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.card{background:#ffffffc9;border:1px solid #ffffffd9;border-radius:21px;padding:21px;box-shadow:var(--shadow);backdrop-filter:blur(12px);transition:transform .22s,box-shadow .22s}.card:hover{transform:translateY(-3px);box-shadow:0 22px 50px #17452a1c}.pothead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.potname{display:flex;align-items:center;gap:11px}.plant{width:44px;height:44px;border-radius:14px;background:var(--mint);display:grid;place-items:center;font-size:23px}.potname h3{font-size:16px;margin:0}.potname p{font-size:11px;color:var(--muted);margin:4px 0 0}.pill{font-size:10px;font-weight:700;padding:7px 10px;border-radius:30px;background:#e7f4e9;color:#286a42}.pill.dry{background:#fff0dc;color:#98601a}.pill.wet{background:#e7efff;color:#3c609b}.reading{display:flex;align-items:baseline;justify-content:space-between}.reading strong{font-size:40px;letter-spacing:-1px}.reading span{font-size:11px;color:var(--muted)}.track{height:10px;border-radius:20px;background:#e9eee9;overflow:hidden;margin:13px 0 10px}.bar{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,#9bcf8f,#267448);transition:width .8s cubic-bezier(.2,.8,.2,1)}.scale{display:flex;justify-content:space-between;color:#8b9a90;font-size:10px}.lower{display:grid;grid-template-columns:1.25fr .75fr;gap:17px;margin-top:17px}.card h3.section{font-size:15px;margin:0 0 14px}.rowline{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px}.rowline:last-of-type{border:0}.rowline span{color:var(--muted)}.good{color:#28734a}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:12px;background:var(--green);color:white;padding:11px 15px;font-weight:700;font-size:12px;cursor:pointer;transition:transform .15s,background .2s}.btn:hover{background:#164c35;transform:translateY(-1px)}.btn:active{transform:scale(.97)}.btn.secondary{background:#e8f2e9;color:#285a3d}.btn.secondary:hover{background:#d9eadc}.weatherbox{display:flex;align-items:center;gap:12px;padding:14px;border-radius:15px;background:#f1f7ef}.weathericon{font-size:31px}.weatherbox strong{font-size:14px}.weatherbox p,.hint{font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.45}.toast{min-height:18px;margin-top:10px;color:#286a42;font-size:11px;font-weight:600}.footer{display:flex;justify-content:space-between;gap:10px;color:#819187;font-size:10px;margin-top:18px;padding:0 3px}.pulse{animation:pulse .45s ease}@keyframes pulse{50%{transform:scale(1.025)}}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Arial;background:linear-gradient(135deg,#eff7ee,#e1f0e5 55%,#f8f8ed);min-height:100vh;overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;width:340px;height:340px;border-radius:50%;background:#b8dfc1;filter:blur(65px);opacity:.45;z-index:-1;animation:drift 12s ease-in-out infinite alternate}
+body:before{top:-150px;left:-110px}body:after{right:-130px;bottom:-170px;background:#d1e5a9;animation-delay:-5s}
+@keyframes drift{to{transform:translate(45px,35px) scale(1.12)}}
+.shell{max-width:1100px;margin:auto;padding:28px 22px 42px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+.brand{display:flex;align-items:center;gap:12px}.logo{height:46px;width:46px;border-radius:15px;background:var(--green);display:grid;place-items:center;color:white;font-size:24px;box-shadow:0 8px 20px #1e654833}
+.brand h1{font-size:20px;letter-spacing:2px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:3px 0 0}
+.demo{font-size:11px;font-weight:700;letter-spacing:.5px;color:#79591b;background:#fff4d8;padding:10px 13px;border-radius:30px;border:1px solid #f1dfb5}
+.hero{background:linear-gradient(115deg,#174b35,#327b51);color:white;border-radius:25px;padding:28px 30px;display:flex;justify-content:space-between;align-items:center;gap:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;margin-bottom:18px}
+.hero:after{content:'🌱';font-size:130px;position:absolute;right:24%;top:-34px;opacity:.1;transform:rotate(-18deg)}
+.hero h2{font-size:clamp(23px,4vw,32px);margin:0 0 9px;letter-spacing:-.8px}.hero p{color:#d6eadc;line-height:1.55;font-size:13px;max-width:570px;margin:0}
+.stat{z-index:1;background:#ffffff1b;border:1px solid #ffffff35;border-radius:18px;padding:16px 20px;min-width:145px}.stat small{display:block;color:#d4e8d9;font-size:10px;letter-spacing:1px}.stat strong{font-size:27px;display:block;margin-top:5px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.card{background:#ffffffc9;border:1px solid #ffffffd9;border-radius:21px;padding:21px;box-shadow:var(--shadow);backdrop-filter:blur(12px);transition:transform .22s,box-shadow .22s}
+.card:hover{transform:translateY(-3px);box-shadow:0 22px 50px #17452a1c}
+.pothead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.potname{display:flex;align-items:center;gap:11px}
+.plant{width:44px;height:44px;border-radius:14px;background:var(--mint);display:grid;place-items:center;font-size:23px}
+.potname h3{font-size:16px;margin:0}.potname p{font-size:11px;color:var(--muted);margin:4px 0 0}
+.pill{font-size:10px;font-weight:700;padding:7px 10px;border-radius:30px;background:#e7f4e9;color:#286a42}.pill.dry{background:#fff0dc;color:#98601a}.pill.wet{background:#e7efff;color:#3c609b}
+.reading{display:flex;align-items:baseline;justify-content:space-between}.reading strong{font-size:40px;letter-spacing:-1px}.reading span{font-size:11px;color:var(--muted)}
+.track{height:10px;border-radius:20px;background:#e9eee9;overflow:hidden;margin:13px 0 10px}.bar{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,#9bcf8f,#267448);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.scale{display:flex;justify-content:space-between;color:#8b9a90;font-size:10px}
+.lower{display:grid;grid-template-columns:1.25fr .75fr;gap:17px;margin-top:17px}
+.card h3.section{font-size:15px;margin:0 0 14px}.rowline{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px}
+.rowline span{color:var(--muted)}.good{color:#28734a}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.btn{border:0;border-radius:12px;background:var(--green);color:white;padding:11px 15px;font-weight:700;font-size:12px;cursor:pointer;transition:transform .15s,background .2s}
+.btn:hover{background:#164c35;transform:translateY(-1px)}.btn:active{transform:scale(.97)}.btn.secondary{background:#e8f2e9;color:#285a3d}.btn.secondary:hover{background:#d9eadc}
+.weatherbox{display:flex;align-items:center;gap:12px;padding:14px;border-radius:15px;background:#f1f7ef}.weathericon{font-size:31px}
+.weatherbox strong{font-size:14px}.weatherbox p,.hint{font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.45}
+.toast{min-height:18px;margin-top:10px;color:#286a42;font-size:11px;font-weight:600}
+.footer{display:flex;justify-content:space-between;gap:10px;color:#819187;font-size:10px;margin-top:18px;padding:0 3px}
+.pulse{animation:pulse .45s ease}@keyframes pulse{50%{transform:scale(1.025)}}
+.connect-area{margin-top:18px;padding:16px;border:1px solid #dceade;border-radius:16px;background:#f7fbf6}
+.connect-area p{font-size:11px;color:var(--muted);line-height:1.5;margin:8px 0}
+.statusline{font-size:12px;font-weight:700;margin-top:10px;color:#8a641e}
 @media(max-width:700px){.shell{padding:18px 13px 30px}.hero{padding:23px;align-items:flex-start;flex-direction:column}.stat{min-width:0}.grid,.lower{grid-template-columns:1fr}.nav{align-items:flex-start;flex-direction:column}.demo{align-self:flex-start}}
 </style>
 </head>
 <body>
 <main class="shell">
-<header class="nav"><div class="brand"><div class="logo">🌱</div><div><h1>ROOTLINK</h1><p>SMART IRRIGATION SYSTEM</p></div></div><div class="demo">● DEMO MODE · NOT CONNECTED TO ARDUINO</div></header>
-<section class="hero"><div><h2>Every root gets what it needs.</h2><p>A simple view of soil moisture across two plant pots. Use the demo controls to see how ROOTLINK responds to changing moisture levels.</p></div><div class="stat"><small>PLANTS MONITORED</small><strong>02 Pots</strong></div></section>
+<header class="nav"><div class="brand"><div class="logo">🌱</div><div><h1>ROOTLINK</h1><p>SMART IRRIGATION SYSTEM</p></div></div><div class="demo" id="connectionBadge">● DEMO MODE · NOT CONNECTED TO ARDUINO</div></header>
+<section class="hero"><div><h2>Every root gets what it needs.</h2><p>A smart view of soil moisture across two plant pots, with live weather awareness to help prevent unnecessary watering.</p></div><div class="stat"><small>PLANTS MONITORED</small><strong>02 Pots</strong></div></section>
 <section class="grid" aria-label="Plant moisture readings">
-<article class="card" id="pot1"><div class="pothead"><div class="potname"><div class="plant">🪴</div><div><h3>Pot 01</h3><p>Soil moisture sensor · A0</p></div></div><span class="pill" id="status1">Healthy</span></div><div class="reading"><strong id="value1">62%</strong><span>SOIL MOISTURE</span></div><div class="track"><div class="bar" id="bar1"></div></div><div class="scale"><span>Dry</span><span>Moist</span><span>Wet</span></div></article>
-<article class="card" id="pot2"><div class="pothead"><div class="potname"><div class="plant">🌿</div><div><h3>Pot 02</h3><p>Soil moisture sensor · A1</p></div></div><span class="pill dry" id="status2">Needs water</span></div><div class="reading"><strong id="value2">31%</strong><span>SOIL MOISTURE</span></div><div class="track"><div class="bar" id="bar2"></div></div><div class="scale"><span>Dry</span><span>Moist</span><span>Wet</span></div></article>
+<article class="card" id="pot1"><div class="pothead"><div class="potname"><div class="plant">🪴</div><div><h3>Pot 01</h3><p>Soil moisture sensor · A0</p></div></div><span class="pill" id="status1">Demo</span></div><div class="reading"><strong id="value1">62%</strong><span>SOIL MOISTURE</span></div><div class="track"><div class="bar" id="bar1" style="width:62%"></div></div><div class="scale"><span>Dry</span><span>Moist</span><span>Wet</span></div><p class="hint" id="raw1">Waiting for live sensor data</p></article>
+<article class="card" id="pot2"><div class="pothead"><div class="potname"><div class="plant">🌿</div><div><h3>Pot 02</h3><p>Soil moisture sensor · A1</p></div></div><span class="pill dry" id="status2">Demo</span></div><div class="reading"><strong id="value2">31%</strong><span>SOIL MOISTURE</span></div><div class="track"><div class="bar" id="bar2" style="width:31%"></div></div><div class="scale"><span>Dry</span><span>Moist</span><span>Wet</span></div><p class="hint" id="raw2">Waiting for live sensor data</p></article>
 </section>
-<section class="lower"><article class="card"><h3 class="section">System status</h3><div class="rowline"><span>Controller</span><strong class="good">Arduino Uno · Demo</strong></div><div class="rowline"><span>Servo motor</span><strong class="good">Sweep test passed</strong></div><div class="rowline"><span>Water pump</span><strong>Not activated</strong></div><div class="rowline"><span>Sensor feed</span><strong>Sample values</strong></div><div class="actions"><button class="btn" id="refreshBtn" type="button">Refresh demo readings ↻</button><button class="btn secondary" id="dryBtn" type="button">Simulate dry soil</button></div><div class="toast" id="message" aria-live="polite">Demo ready. Try a control above.</div></article>
-<article class="card"><h3 class="section">Garden conditions</h3><div class="weatherbox"><div class="weathericon">🌤️</div><div><strong>Weather panel</strong><p><span id="weather-status">Connecting to live weather...</span></p></div></div><p class="hint">This preview uses sample readings only. Live Arduino readings and automatic pump control are not enabled yet.</p></article></section>
-<footer class="footer"><span>ROOTLINK · <b>Sense. Decide. Water.</b></span><span>Two-pot prototype preview</span></footer>
+<section class="lower">
+<article class="card"><h3 class="section">System status</h3>
+<div class="rowline"><span>Controller</span><strong id="controllerStatus">Arduino Uno · Demo</strong></div>
+<div class="rowline"><span>Water pump</span><strong id="pumpStatus">Not connected</strong></div>
+<div class="rowline"><span>Sensor feed</span><strong id="sensorStatus">Sample values</strong></div>
+<div class="rowline"><span>Rain protection</span><strong id="rainLockStatus">Waiting for Arduino</strong></div>
+<div class="actions"><button class="btn" id="connectBtn" type="button">Connect Arduino ↗</button><button class="btn secondary" id="refreshBtn" type="button">Refresh demo readings ↻</button></div>
+<div class="toast" id="message" aria-live="polite">Demo ready. Connect the Arduino to receive live sensor readings.</div>
+<div class="connect-area"><strong>Arduino connection</strong><p>Use desktop Chrome or Edge over this secure website. Close Arduino IDE Serial Monitor before connecting. Keep the Arduino plugged in by USB.</p><div class="statusline" id="serialStatus">Not connected</div></div>
+</article>
+<article class="card"><h3 class="section">Garden conditions</h3>
+<div class="weatherbox"><div class="weathericon" id="weatherIcon">🌤️</div><div><strong>Live weather</strong><p id="weatherStatus">Connecting to Open-Meteo...</p></div></div>
+<div class="rowline"><span>Temperature</span><strong id="weatherTemp">--°C</strong></div>
+<div class="rowline"><span>Rain probability (next hour)</span><strong id="rainChance">--%</strong></div>
+<div class="rowline"><span>Current rainfall</span><strong id="rainNow">Checking...</strong></div>
+<p class="hint" id="weatherAdvice">Weather data helps ROOTLINK decide whether watering should be paused.</p>
+</article>
+</section>
+<footer class="footer"><span>ROOTLINK · <b>Sense. Decide. Water.</b></span><span>Two-pot smart irrigation prototype</span></footer>
 </main>
 <script>
 (function(){
- 'use strict';
- const $ = id => document.getElementById(id);
- function updatePot(n, value){
-   const safe = Math.max(0, Math.min(100, Number(value)||0));
-   $('value'+n).textContent = safe + '%';
-   $('bar'+n).style.width = safe + '%';
-   const badge = $('status'+n);
-   badge.className = 'pill' + (safe < 35 ? ' dry' : safe > 80 ? ' wet' : '');
-   badge.textContent = safe < 35 ? 'Needs water' : safe > 80 ? 'Very wet' : 'Healthy';
- }
- function setMessage(text){$('message').textContent=text;}
- function refresh(){
-   const a = Math.floor(25 + Math.random()*66);
-   const b = Math.floor(25 + Math.random()*66);
-   updatePot(1,a); updatePot(2,b);
-   $('pot1').classList.remove('pulse'); $('pot2').classList.remove('pulse');
-   void $('pot1').offsetWidth;
-   $('pot1').classList.add('pulse'); $('pot2').classList.add('pulse');
-   setMessage('Demo readings refreshed successfully.');
- }
- function dry(){updatePot(1,22);updatePot(2,18);setMessage('Dry-soil scenario: both pots need water.');}
- document.addEventListener('DOMContentLoaded',function(){
-   updatePot(1,62);updatePot(2,31);
-   $('refreshBtn').addEventListener('click',refresh);
-   $('dryBtn').addEventListener('click',dry);
- });
-})();
-</script>
- <div id="rootlink-weather" style="background:#172b25;color:white;padding:20px;border-radius:18px;margin:20px;font-family:Arial">
-  <h2>🌦️ Live Weather</h2>
-  <h1 id="rl-temp">Loading...</h1>
-  <p id="rl-condition">Checking weather...</p>
-  <p id="rl-rain">Rain probability: --</p>
-  <h3 id="rl-alert">Checking watering conditions...</h3>
-</div>
-
-<script>
-async function loadRootlinkWeather() {
-  const url = "https://api.open-meteo.com/v1/forecast?latitude=17.45&longitude=78.50&current=temperature_2m,precipitation,rain,weather_code&hourly=precipitation_probability&forecast_days=1&timezone=Asia%2FKolkata";
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    const current = data.current;
-    const rainChance = data.hourly.precipitation_probability[0];
-    const raining = current.rain > 0 || current.precipitation > 0;
-   const panel = document.getElementById("weather-status");
-
-if (panel) {
-  panel.textContent = raining
-    ? "🌧️ Rain detected — watering should stop"
-    : "☀️ No rain detected — checking soil moisture";
+'use strict';
+const $=id=>document.getElementById(id);
+let port=null,reader=null,writer=null,readLoopActive=false;
+let weatherRainLock=false,arduinoConnected=false;
+function setMessage(t){$('message').textContent=t;}
+function updatePot(n,pct,raw){
+ const safe=Math.max(0,Math.min(100,Math.round(Number(pct)||0)));
+ $('value'+n).textContent=safe+'%';$('bar'+n).style.width=safe+'%';
+ const badge=$('status'+n);badge.className='pill'+(safe<35?' dry':safe>80?' wet':'');
+ badge.textContent=safe<35?'Needs water':safe>80?'Very wet':'Healthy';
+ $('raw'+n).textContent='Raw sensor reading: '+raw;
 }
-
-    document.getElementById("rl-temp").textContent =
-      current.temperature_2m + "°C";
-
-    document.getElementById("rl-condition").textContent =
-      raining ? "🌧️ It is raining!" : "☀️ No rain detected right now";
-
-    document.getElementById("rl-rain").textContent =
-      "Rain probability: " + rainChance + "%";
-
-    document.getElementById("rl-alert").textContent =
-      raining ? "⛔ Rain detected — watering should stop" :
-      "✅ No current rain — check soil moisture";
-  } catch (error) {
-    document.getElementById("rl-condition").textContent =
-      "Weather unavailable. Check internet.";
+function rawToPercent(raw){
+ // Initial estimate only. Calibrate dry/wet values using your actual soil and sensors.
+ const dry=1023,wet=300;
+ return Math.max(0,Math.min(100,Math.round((dry-raw)*100/(dry-wet))));
+}
+function refreshDemo(){
+ updatePot(1,62,'demo');updatePot(2,31,'demo');
+ setMessage('Demo readings refreshed. Connect Arduino for real readings.');
+}
+async function weather(){
+ const url='https://api.open-meteo.com/v1/forecast?latitude=17.45&longitude=78.50&current=temperature_2m,precipitation,rain,weather_code&hourly=precipitation_probability&forecast_days=1&timezone=Asia%2FKolkata';
+ try{
+  const r=await fetch(url);if(!r.ok)throw new Error('Weather request failed');
+  const d=await r.json(),c=d.current;
+  let idx=d.hourly.time.findIndex(t=>t===c.time);
+  if(idx<0)idx=d.hourly.time.findIndex(t=>t>=c.time);
+  if(idx<0)idx=0;
+  const chance=Number(d.hourly.precipitation_probability[idx]||0);
+  const raining=Number(c.rain||0)>0||Number(c.precipitation||0)>0;
+  // Pause irrigation during current rain or when the next-hour rain chance is at least 60%.
+  weatherRainLock=raining||chance>=60;
+  $('weatherTemp').textContent=c.temperature_2m+'°C';
+  $('rainChance').textContent=chance+'%';
+  $('rainNow').textContent=raining?'Yes':'No';
+  $('weatherIcon').textContent=raining?'🌧️':(chance>=60?'🌦️':'☀️');
+  $('weatherStatus').textContent=raining?'Rain is falling now':chance>=60?'High chance of rain soon':'No rain detected right now';
+  $('weatherAdvice').textContent=weatherRainLock?'Rain protection active: watering must be paused.':'No rain lock: soil moisture can guide watering.';
+  $('rainLockStatus').textContent=weatherRainLock?'RAIN LOCK ACTIVE':'No rain lock';
+  $('rainLockStatus').style.color=weatherRainLock?'#a33b2f':'#28734a';
+  if(arduinoConnected) await sendRainCommand();
+ }catch(e){
+  $('weatherStatus').textContent='Weather unavailable — do not assume it is safe to water.';
+  $('weatherAdvice').textContent='Fail-safe: weather unavailable. Keep automatic watering paused until weather returns.';
+  weatherRainLock=true;$('rainLockStatus').textContent='Weather unavailable · pause';
+  if(arduinoConnected) await sendRainCommand();
+ }
+}
+async function sendRainCommand(){
+ if(!writer)return;
+ try{await writer.write(new TextEncoder().encode(weatherRainLock?'RAIN_LOCK:1\n':'RAIN_LOCK:0\n'));}
+ catch(e){setMessage('Could not send rain-protection command: '+e.message);}
+}
+function parseSerialLine(line){
+ const m=line.match(/POT1\s*:\s*(\d+)\s*,\s*POT2\s*:\s*(\d+)/i);
+ if(!m)return;
+ const a=Number(m[1]),b=Number(m[2]);
+ updatePot(1,rawToPercent(a),a);updatePot(2,rawToPercent(b),b);
+ $('sensorStatus').textContent='Live readings received';
+ $('controllerStatus').textContent='Arduino Uno · Connected';
+ $('connectionBadge').textContent='● ARDUINO CONNECTED';
+ $('connectionBadge').style.color='#286a42';
+ setMessage('Live Arduino readings received successfully.');
+}
+async function readSerial(){
+ if(!port||!port.readable||readLoopActive)return;
+ readLoopActive=true;
+ const decoder=new TextDecoderStream();
+ port.readable.pipeTo(decoder.writable).catch(()=>{});
+ reader=decoder.readable.getReader();
+ let buffer='';
+ try{
+  while(true){
+   const {value,done}=await reader.read();if(done)break;
+   buffer+=value;
+   const lines=buffer.split(/\r?\n/);buffer=lines.pop()||'';
+   for(const line of lines)parseSerialLine(line.trim());
   }
+ }catch(e){$('serialStatus').textContent='Serial connection ended.';}
+ finally{try{reader.releaseLock();}catch(e){}reader=null;readLoopActive=false;}
 }
-
-loadRootlinkWeather();
-setInterval(loadRootlinkWeather, 600000);
+async function connectArduino(){
+ if(!('serial' in navigator)){
+  setMessage('Web Serial is not supported here. Use desktop Chrome or Edge on the ROOTLINK HTTPS website.');
+  return;
+ }
+ try{
+  if(!port)port=await navigator.serial.requestPort();
+  await port.open({baudRate:9600});
+  writer=port.writable.getWriter();
+  arduinoConnected=true;
+  $('serialStatus').textContent='Connected at 9600 baud · waiting for sensor data';
+  $('connectionBadge').textContent='● ARDUINO CONNECTED';
+  $('connectionBadge').style.color='#286a42';
+  $('controllerStatus').textContent='Arduino Uno · Connected';
+  $('sensorStatus').textContent='Waiting for live readings';
+  $('pumpStatus').textContent='Not controlled by this sketch yet';
+  $('connectBtn').textContent='Arduino Connected ✓';
+  setMessage('Arduino connected. Listening for POT1 and POT2 readings.');
+  await sendRainCommand();
+  readSerial();
+ }catch(e){
+  setMessage('Connection failed: '+e.message);
+  $('serialStatus').textContent='Not connected — check USB and close Serial Monitor.';
+  if(writer){try{writer.releaseLock();}catch(err){}writer=null;}
+ }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+ $('connectBtn').addEventListener('click',connectArduino);
+ $('refreshBtn').addEventListener('click',refreshDemo);
+ refreshDemo();weather();setInterval(weather,600000);
+});
+})();
 </script>
 </body>
 </html>
