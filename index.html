@@ -115,7 +115,7 @@ async function weather(){
   $('rainNow').textContent=raining?'Yes':'No';
   $('weatherIcon').textContent=raining?'🌧️':(chance>=60?'🌦️':'☀️');
   $('weatherStatus').textContent=raining?'Rain is falling now':chance>=60?'High chance of rain soon':'No rain detected right now';
-  $('weatherAdvice').textContent=weatherRainLock?'Rain protection active: watering must be paused.':'No rain lock: soil moisture can guide watering.';
+  $('weatherAdvice').textContent=weatherRainLock?'Rain protection active: watering must be paused.':'<span id="rain-lock-status" style="font-weight:700;color:#16a34a;">   RAIN LOCK: OFF </span>';
   $('rainLockStatus').textContent=weatherRainLock?'RAIN LOCK ACTIVE':'No rain lock';
   $('rainLockStatus').style.color=weatherRainLock?'#a33b2f':'#28734a';
   if(arduinoConnected) await sendRainCommand();
